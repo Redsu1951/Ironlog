@@ -152,16 +152,6 @@ Dark-first design with a retro-CRT accent palette. Electric lime (`#E8FF47`) on 
 - **No `setState` in screens.** Riverpod only.
 - **All prompts centralized.** `ai_prompts.dart` is the single source of truth.
 
----
-
-## Contributing
-
-See [CLAUDE.md](CLAUDE.md) for the full architecture specification, schema definitions, DAO contracts, and non-negotiable rules before opening a PR.
-
-Run tests:
-```bash
-flutter test
-```
 
 ---
 
