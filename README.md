@@ -87,7 +87,7 @@ lib/
 
 ### 1. Clone & install
 ```bash
-git clone https://github.com/your-username/ironlog.git
+git clone https://github.com/Redsu1951/ironlog.git
 cd ironlog
 flutter pub get
 ```
