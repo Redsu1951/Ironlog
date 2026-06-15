@@ -1,0 +1,119 @@
+name: ironlog
+description: Offline-first AI-powered gym tracking app.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+
+# NOTE (deviation approved by user): the locked STACK from CLAUDE.md §2 is unchanged —
+# only the version numbers were bumped forward to the newest set that resolves against
+# Flutter 3.38.5 / Dart 3.10. Consequences the code accounts for:
+#   * Riverpod 3.x  (codegen @riverpod; autoDispose is the default, keepAlive opt-in)
+#   * Freezed 3.x   (abstract/sealed classes with `with _$X`)
+#   * flutter_gemma 0.12.x (newer MediaPipe API — isolated behind GemmaService)
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # State Management
+  flutter_riverpod: ^3.1.0
+  riverpod_annotation: ^4.0.0
+
+  # Database
+  drift: ^2.31.0
+  sqlite3_flutter_libs: ^0.5.0
+  sqlite3: ^2.1.0
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # Firebase (initialization is guarded — app runs offline without google-services.json)
+  firebase_core: ^4.10.0
+  firebase_auth: ^6.5.2
+  google_sign_in: ^7.2.0
+  firebase_storage: ^13.4.2
+  cloud_firestore: ^6.5.0
+
+  # Navigation
+  go_router: ^17.3.0
+
+  # AI / ML (Gemma E2B via MediaPipe)
+  flutter_gemma: ^0.12.6
+
+  # Voice / Speech
+  speech_to_text: ^7.4.0
+
+  # Charts
+  fl_chart: ^1.2.0
+
+  # Notifications
+  flutter_local_notifications: ^22.0.1
+
+  # Display Refresh Rate
+  flutter_displaymode: ^0.7.0
+
+  # UI / Fonts
+  google_fonts: ^8.1.0
+
+  # Utilities
+  freezed_annotation: ^3.1.0
+  json_annotation: ^4.9.0
+  uuid: ^4.5.3
+  intl: ^0.20.2
+  connectivity_plus: ^7.1.1
+  shared_preferences: ^2.5.5
+  shimmer: ^3.0.0
+  permission_handler: ^12.0.3
+  file_picker: ^8.0.0
+
+  # HTTP (seeding script only — never used at runtime)
+  dio: ^5.9.2
+
+  # Future monetization stub (uncomment when ready)
+  # purchases_flutter: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  build_runner: ^2.15.0
+  drift_dev: ^2.31.0
+  riverpod_generator: ^4.0.0
+  freezed: ^3.2.3
+  json_serializable: ^6.11.2
+  custom_lint: ^0.8.1
+  riverpod_lint: ^3.1.0
+
+# CODEGEN/HOST WORKAROUND (revisit for iOS):
+# path_provider_foundation 2.6.0 (Darwin impl) depends on `objective_c`, which
+# ships native-asset build hooks. Under Dart 3.10, build_runner compiles its
+# entrypoint with `dart compile`, which refuses any package graph containing
+# hooks ("use `dart build` instead"), breaking ALL code generation. 2.5.1 is the
+# newest release without the objective_c dependency. This pin only affects the
+# Darwin implementation (unused on Android/Windows); remove it when wiring iOS
+# on a Mac and migrating off build_runner or onto a hooks-aware toolchain.
+dependency_overrides:
+  path_provider_foundation: 2.5.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/data/exercises_seed.json
+    - assets/icons/
+
+  fonts:
+    # Pixelify Sans (retro pixel headers) — variable font, weights via wght axis.
+    - family: PixelifySans
+      fonts:
+        - asset: assets/fonts/PixelifySans/PixelifySans-Variable.ttf
+    # Inter (modern body) — variable font, weights via wght axis.
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter/Inter-Variable.ttf
+    # InterMono = Space Mono (approved substitute for stats/numbers).
+    - family: InterMono
+      fonts:
+        - asset: assets/fonts/InterMono/SpaceMono-Regular.ttf
+        - asset: assets/fonts/InterMono/SpaceMono-Bold.ttf
+          weight: 700
