@@ -6,8 +6,7 @@ version: 1.0.0+1
 environment:
   sdk: '>=3.5.0 <4.0.0'
 
-# NOTE (deviation approved by user): the locked STACK from CLAUDE.md §2 is unchanged —
-# only the version numbers were bumped forward to the newest set that resolves against
+
 # Flutter 3.38.5 / Dart 3.10. Consequences the code accounts for:
 #   * Riverpod 3.x  (codegen @riverpod; autoDispose is the default, keepAlive opt-in)
 #   * Freezed 3.x   (abstract/sealed classes with `with _$X`)
